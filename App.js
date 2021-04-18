@@ -1,15 +1,52 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Header from './src/header';
+import Generator from './src/generator';
+import NumList from './src/numlist';
 
 class App extends Component {
+  state = {
+    appName: 'My First App',
+    random: [36, 999]
+  }
+
+  onAddRandomNum = () => {
+    const randomNum = Math.floor(Math.random()*100)+1; // 1~100 사이의 숫자 생성
+    this.setState(prevState => {
+      return this.state.random = [...prevState.random, randomNum]
+    })
+  }
+
+  onNumDelete = (position) => {
+    const newArray = this.state.random.filter((num, index)=>{
+      return position != index;
+    })
+    this.setState({
+      random: newArray
+    })
+  }
+
   render() {
     return (
       <View style={styles.mainView}>
-        <Header/>
+        <Header
+          name={this.state.appName}
+        />
         <View style={styles.subView}>
-          <Text style={styles.mainText}>hello world</Text>
+          <TouchableOpacity>
+            <Text
+              style={styles.mainText}
+              onPress={()=>alert('text touch event')}
+            >Hello World</Text>
+          </TouchableOpacity>
         </View>
+        <Generator
+          add={this.onAddRandomNum}
+        />
+        <NumList
+          numbers={this.state.random}
+          delete={this.onNumDelete}
+        />
       </View>
     )
   }
@@ -21,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', // green -> white
     paddingTop: 50,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   subView: {
     backgroundColor: 'yellow',

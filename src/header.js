@@ -1,10 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Header = () => (
-  <View style={styles.header}>
-    <Text>This is header</Text>
-  </View>
+const Header = (props) => (
+  <TouchableOpacity
+    style={styles.header}
+    onPress={() => { alert('hello world') }}
+  >
+    <View style={styles.header}>
+      <Text>{props.name}</Text>
+    </View>
+  </TouchableOpacity>
 )
 
 const styles = StyleSheet.create({
